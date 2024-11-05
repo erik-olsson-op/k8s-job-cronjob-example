@@ -1,5 +1,16 @@
 # k8s-job-cronjob-example
 
-k8s - playing around with cronjob and job n database running in pod
+demo 2024-11-01 (2024-11-++)
 
-demo 2024-11-01
+* Playing around with cronjob and job in a Minikube singel node cluster
+* Using Golang with Go Workspace
+
+See Makefile for setup commands.
+
+## Tech
+
+* Minikube
+* Docker and Docker Compose
+* Golang
+
+

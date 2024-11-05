@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config
+  namespace: my-namespace
+data:
+  DATABASE_HOST: "mariadb-external.my-namespace.svc.cluster.local"
+  DATABASE_PORT: "3306"
+  DATABASE_NAME: "k8s_db"
+  DATABASE_USER: "k8s_user"

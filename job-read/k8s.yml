@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: job-read
+  namespace: my-namespace  # Specify your namespace here
+  labels:
+    app: job-read
+  annotations:
+    description: "This is a k8s read Job"
+spec:
+  suspend: false
+  backoffLimit: 3  # Number of retries before considering the job failed
+  activeDeadlineSeconds: 200  # Maximum duration in seconds for the job to run
+  ttlSecondsAfterFinished: 3600  # Time to live for the job after it finishes
+  template:
+    metadata:
+      labels:
+        app: job-read
+    spec:
+      containers:
+        - name: job-read-container
+          image: job-read
+          imagePullPolicy: IfNotPresent  # Pulls the image if not present locally
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          envFrom:
+            - secretRef:
+                name: my-secret
+            - configMapRef:
+                name: my-config
+      restartPolicy: OnFailure

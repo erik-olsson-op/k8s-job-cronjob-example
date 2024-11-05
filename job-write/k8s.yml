@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: job-write
+  namespace: my-namespace
+  labels:
+    app: job-write
+  annotations:
+    description: "This CronJob writes data every 1 minute"
+spec:
+  suspend: false
+  schedule: "* * * * *"  # Runs every 1 minute
+  timeZone: "Europe/Stockholm"  # Specify the time zone
+  startingDeadlineSeconds: 30  # Deadline of 30 seconds
+  concurrencyPolicy: Forbid  # Prevents concurrent runs
+  failedJobsHistoryLimit: 1  # Keeps history of the last 3 failed jobs
+  successfulJobsHistoryLimit: 1  # Keeps history of the last 3 successful jobs
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: job-write
+        spec:
+          containers:
+            - name: job-write-container
+              image: job-write
+              imagePullPolicy: IfNotPresent  # Pulls the image if not present locally
+              resources:
+                requests:
+                  memory: "64Mi"
+                  cpu: "250m"
+                limits:
+                  memory: "128Mi"
+                  cpu: "500m"
+              envFrom:
+                - secretRef:
+                    name: my-secret
+                - configMapRef:
+                    name: my-config
+          restartPolicy: OnFailure

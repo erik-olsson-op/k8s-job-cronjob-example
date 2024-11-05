@@ -1,0 +1,9 @@
+# Create DNS for the localhost ip on the host
+apiVersion: v1
+kind: Service
+metadata:
+  name: mariadb-external
+  namespace: my-namespace
+spec:
+  type: ExternalName
+  externalName: "host.minikube.internal"
