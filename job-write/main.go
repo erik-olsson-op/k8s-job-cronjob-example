@@ -2,9 +2,9 @@ package main
 
 import (
 	"github.com/brianvoe/gofakeit/v7"
+	"github.com/erik-olsson-op/shared/database"
 	"github.com/erik-olsson-op/shared/logger"
 	"github.com/erik-olsson-op/shared/models"
-	"github.com/erik-olsson-op/shared/utils"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 	var persons = make([]models.Person, 10)
 	gofakeit.Slice(&persons)
 
-	err = utils.Write(persons)
+	err = database.Write(persons)
 	if err != nil {
 		panic(err)
 	}

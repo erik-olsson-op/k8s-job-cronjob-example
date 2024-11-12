@@ -3,11 +3,9 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/brianvoe/gofakeit/v7"
+	"github.com/erik-olsson-op/shared/database"
 	"github.com/erik-olsson-op/shared/logger"
-	"github.com/erik-olsson-op/shared/models"
 	"net/http"
-	"strconv"
 	"sync"
 )
 
@@ -37,22 +35,8 @@ func consumerHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method only GET", http.StatusMethodNotAllowed)
 		return
 	}
-	logger.Logger.Info("/consumer was requested!")
-	seed, err := strconv.ParseInt(r.PathValue("q"), 10, 64)
-	if err != nil {
-		logger.Logger.Error(err)
-		http.Error(w, "Not a number!", http.StatusBadRequest)
-		return
-	}
-	err = gofakeit.Seed(0)
-	if err != nil {
-		logger.Logger.Error(err)
-		http.Error(w, "Failed", http.StatusInternalServerError)
-		return
-	}
-	var persons = make([]models.Person, seed)
-	gofakeit.Slice(&persons)
-
+	logger.Logger.Info("/consume was requested!")
+	persons := database.Read()
 	jsonData, err := json.Marshal(&persons)
 	if err != nil {
 		logger.Logger.Error(err)
