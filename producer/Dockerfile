@@ -18,14 +18,13 @@ COPY /shared ./shared
 RUN go mod download && go mod verify
 
 # build the application
-WORKDIR /app/job-read
+WORKDIR /app/producer
 RUN go build -v -o .
 
 # remove folders after build
 RUN rm -rf ./job-write
 RUN rm -rf ./consumer
-RUN rm -rf ./producer
 RUN rm -rf ./shared
 RUN rm -rf go.work
 
-CMD ["./job-read"]
+CMD ["./producer"]

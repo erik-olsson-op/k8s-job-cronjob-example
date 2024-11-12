@@ -20,7 +20,7 @@ spec:
       containers:
         - name: job-read-container
           image: job-read
-          imagePullPolicy: IfNotPresent  # Pulls the image if not present locally
+          imagePullPolicy: Never
           resources:
             requests:
               memory: "64Mi"

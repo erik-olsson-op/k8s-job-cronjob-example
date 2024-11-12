@@ -8,3 +8,7 @@ data:
   DATABASE_PORT: "3306"
   DATABASE_NAME: "k8s_db"
   DATABASE_USER: "k8s_user"
+  CONSUMER_HOST: "consumer-service"
+  CONSUMER_PORT: "8081"
+  PRODUCER_HOST: "producer-service"
+  PRODUCER_PORT: "8080"

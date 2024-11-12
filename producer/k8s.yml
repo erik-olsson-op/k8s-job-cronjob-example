@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: producer
+  namespace: my-namespace
+  labels:
+    app: producer-app
+spec:
+  containers:
+    - name: producer-container
+      image: producer:latest
+      imagePullPolicy: Never
+      ports:
+        - containerPort: 8080
+      envFrom:
+        - secretRef:
+            name: my-secret
+        - configMapRef:
+            name: my-config
+      resources:
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
+        requests:
+          memory: "256Mi"
+          cpu: "250m"

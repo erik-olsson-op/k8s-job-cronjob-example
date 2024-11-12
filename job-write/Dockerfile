@@ -11,6 +11,8 @@ COPY go.work ./
 COPY /job-read ./job-read
 # copy the folder job for reference to be able to build by using go workspace
 COPY /job-write ./job-write
+COPY /consumer ./consumer
+COPY /producer ./producer
 COPY /shared ./shared
 # get the packages and verify
 RUN go mod download && go mod verify
@@ -21,6 +23,8 @@ RUN go build -v -o .
 
 # remove folders after build
 RUN rm -rf ./job-read
+RUN rm -rf ./consumer
+RUN rm -rf ./producer
 RUN rm -rf ./shared
 RUN rm -rf go.work
 

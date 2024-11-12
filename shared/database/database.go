@@ -4,18 +4,18 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/erik-olsson-op/shared/logger"
+	"github.com/erik-olsson-op/shared/utils"
 	_ "github.com/go-sql-driver/mysql"
-	"os"
 )
 
 var Connection *sql.DB
 
 func init() {
-	user := getEnv("DATABASE_USER")
-	port := getEnv("DATABASE_PORT")
-	password := getEnv("DATABASE_PASSWORD")
-	host := getEnv("DATABASE_HOST")
-	databaseName := getEnv("DATABASE_NAME")
+	user := utils.GetEnv("DATABASE_USER")
+	port := utils.GetEnv("DATABASE_PORT")
+	password := utils.GetEnv("DATABASE_PASSWORD")
+	host := utils.GetEnv("DATABASE_HOST")
+	databaseName := utils.GetEnv("DATABASE_NAME")
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, password, host, port, databaseName)
 	logger.Logger.Info(dsn)
 	var err error
@@ -32,12 +32,4 @@ func init() {
 
 	Connection.SetMaxOpenConns(10)
 	Connection.SetMaxIdleConns(5)
-}
-
-func getEnv(key string) string {
-	value, ok := os.LookupEnv(key)
-	if !ok {
-		panic(key)
-	}
-	return value
 }
