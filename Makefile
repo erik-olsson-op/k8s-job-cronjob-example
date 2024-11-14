@@ -35,6 +35,9 @@ minikube-delete-resources:
 	minikube kubectl -- delete cronjob job-write --namespace=$(k8sNamespace)
 	minikube kubectl -- delete svc mariadb-external -n $(k8sNamespace)
 
+minikube-read-job:
+	minikube kubectl -- apply -f job-read/k8s.yml
+
 # Apply k8s definitions
 minikube-apply-resources:
 	minikube kubectl -- apply -f scripts/config-k8s.yml

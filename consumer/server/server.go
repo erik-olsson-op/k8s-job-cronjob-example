@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/erik-olsson-op/shared/database"
 	"github.com/erik-olsson-op/shared/logger"
+	"github.com/erik-olsson-op/shared/utils"
 	"net/http"
 	"sync"
 )
@@ -35,14 +36,15 @@ func consumerHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method only GET", http.StatusMethodNotAllowed)
 		return
 	}
-	logger.Logger.Info("/consume was requested!")
 	persons := database.Read()
+	logger.Logger.Info(fmt.Sprintf("/consume was requested, found %d persons in db", len(persons)))
 	jsonData, err := json.Marshal(&persons)
 	if err != nil {
 		logger.Logger.Error(err)
 		http.Error(w, "Failed", http.StatusInternalServerError)
 		return
 	}
+	w.Header().Add(utils.HeaderContentType, "application/json")
 	w.WriteHeader(http.StatusOK)
 	_, err = w.Write(jsonData)
 	if err != nil {

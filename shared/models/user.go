@@ -1,8 +1,8 @@
 package models
 
 type Person struct {
-	Id    int64  `fake:"skip"`
-	Name  string `fake:"{firstname}"`
-	Email string `fake:"{email}"`
-	Phone string `fake:"{phone}"`
+	Id    int64  `json:"id" fake:"skip"`
+	Name  string `json:"name" fake:"{firstname}"`
+	Email string `json:"email" fake:"{email}"`
+	Phone string `json:"phone" fake:"{phone}"`
 }
